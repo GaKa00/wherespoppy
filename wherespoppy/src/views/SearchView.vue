@@ -11,24 +11,34 @@
       />
     </header>
 
-    <section class="concert-list">
+    
+    <!-- <section v-if="concerts.length > 0" class="concert-list">
       <div 
-        v-for="concert in concerts" 
-        :key="concert.id" 
-        class="concert-card"
+      v-for="concert in concerts" 
+      :key="concert.id" 
+      class="concert-card"
+      
       >
-        <h2>{{ concert.date }}</h2>
-        <p>{{ concert.venue }}</p>
-        <p>{{ concert.city }}</p>
-        <a :href="concert.ticketLink" target="_blank" rel="noopener" class="buy-tickets">
-          Buy Tickets
-        </a>
-      </div>
-    </section>
-  </div>
+      <h2>{{ concert.date }}</h2>
+      <p>{{ concert.venue }}</p>
+      <p>{{ concert.city }}</p>
+      <a :href="concert.ticketLink" target="_blank" rel="noopener" class="buy-tickets">
+        Buy Tickets
+      </a>
+    </div>
+  </section> -->
+
+  <!-- <section v-else  class="no-concert">
+    <div>
+<h2>You did not find poppy.</h2>
+    </div>
+
+  
+  </section> -->
+</div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   data() {
     return {
@@ -114,3 +124,4 @@ header input {
   color: #000;
 }
 </style>
+
