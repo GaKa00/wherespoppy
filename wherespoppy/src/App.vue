@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterView, RouterLink } from 'vue-router';
+import { RouterView,  } from 'vue-router';
 
 </script>
 
@@ -12,11 +12,10 @@ import { RouterView, RouterLink } from 'vue-router';
 
     <!-- Main Content -->
     <main>
+      <RouterView/>
       
-
-        <video autoplay muted loop src="../public/globe.mp4" class="background-video"></video>
-     <RouterLink class="glitch-button" to="/concerts" >Find Poppy </RouterLink>
-     <!-- at click, sen d to concerts page, at hover make it glitch -->
+    
+     <!-- at click, send to concerts page, at hover make it glitch -->
     </main>
 
     <!-- Footer -->
@@ -76,35 +75,6 @@ footer {
  
 }
 
-
-.background-video {
- 
-  width: 90%;
-  max-height: 65vh; 
- 
-  object-fit: cover; 
-  border-radius: 8px; 
-  overflow: hidden; 
-    border: 2px solid #fff;
-    margin: 0 auto;
- 
-}
-
-.glitch-button {
-  padding: 20px;
-  margin: 0 auto;
-  max-width: 40vh;
-  min-width: 20vh;
-  background-color: transparent;
-  border: 2px solid #fff;
-  color: #fff;
-  font-size: 1.5rem;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  border-radius: 8px;
-  transition: all 0.3s ease;  
-}
 
 
 
