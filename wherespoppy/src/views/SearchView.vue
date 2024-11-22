@@ -1,44 +1,146 @@
-<template>
-  <div class="search-view">
-    <header>
-      <h1>Poppy Concert Tracker</h1>
-      <input 
-        type="text" 
-        v-model="location" 
-        @input="fetchConcerts" 
-        placeholder="Enter your location"
-        aria-label="Search by location"
-      />
-    </header>
 
-    
-    <!-- <section v-if="concerts.length > 0" class="concert-list">
-      <div 
-      v-for="concert in concerts" 
-      :key="concert.id" 
-      class="concert-card"
-      
-      >
-      <h2>{{ concert.date }}</h2>
-      <p>{{ concert.venue }}</p>
-      <p>{{ concert.city }}</p>
-      <a :href="concert.ticketLink" target="_blank" rel="noopener" class="buy-tickets">
-        Buy Tickets
-      </a>
-    </div>
-  </section> -->
 
-  <!-- <section v-else  class="no-concert">
-    <div>
-<h2>You did not find poppy.</h2>
-    </div>
+<script setup lang="ts">
+import { ref } from "vue";
 
+// Declare reactive variables using Composition API
+const country = ref(""); // Reactive variable to hold the selected country ISO code
+
+// Reactive countries object
+const countries = {
+  AD: "Andorra",
+  AE: "United Arab Emirates",
+  AI: "Anguilla",
+  AN: "Netherlands Antilles",
+  AR: "Argentina",
+  AT: "Austria",
+  AU: "Australia",
+  AZ: "Azerbaijan",
+  BB: "Barbados",
+  BE: "Belgium",
+  BH: "Bahrain",
+  BG: "Bulgaria",
+  BM: "Bermuda",
+  BR: "Brazil",
+  BS: "Bahamas",
+  CA: "Canada",
+  CH: "Switzerland",
+  CL: "Chile",
+  CN: "China",
+  CO: "Colombia",
+  CR: "Costa Rica",
+  CY: "Cyprus",
+  CZ: "Czech Republic",
+  DE: "Germany",
+  DK: "Denmark",
+  DO: "Dominican Republic",
+  EC: "Ecuador",
+  EE: "Estonia",
+  ES: "Spain",
+  FI: "Finland",
+  FO: "Faroe Islands",
+  FR: "France",
+  GB: "Great Britain",
+  GE: "Georgia",
+  GH: "Ghana",
+  GI: "Gibraltar",
+  GR: "Greece",
+  HK: "Hong Kong",
+  HR: "Croatia",
+  HU: "Hungary",
+  IE: "Ireland",
+  IL: "Israel",
+  IN: "India",
+  IS: "Iceland",
+  IT: "Italy",
+  JM: "Jamaica",
+  JP: "Japan",
+  KR: "Korea, Republic of",
+  LB: "Lebanon",
+  LC: "Saint Lucia",
+  LT: "Lithuania",
+  LU: "Luxembourg",
+  LV: "Latvia",
+  MA: "Morocco",
+  MC: "Monaco",
+  ME: "Montenegro",
+  MT: "Malta",
+  MX: "Mexico",
+  MY: "Malaysia",
+  ND: "Northern Ireland",
+  NL: "Netherlands",
+  NO: "Norway",
+  NZ: "New Zealand",
+  PE: "Peru",
+  PL: "Poland",
+  PT: "Portugal",
+  RO: "Romania",
+  RS: "Serbia",
+  RU: "Russian Federation",
+  SA: "Saudi Arabia",
+  SE: "Sweden",
+  SG: "Singapore",
+  SI: "Slovenia",
+  SK: "Slovakia",
+  TH: "Thailand",
+  TR: "Turkey",
+  TT: "Trinidad and Tobago",
+  TW: "Taiwan",
+  UA: "Ukraine",
+  UY: "Uruguay",
+  US: "United States Of America",
+  VE: "Venezuela",
+  ZA: "South Africa",
+};
+
+
+        async function fetchConcerts(country) {
+      const url = `https://app.ticketmaster.com/discovery/v2/events.json?attractionId=K8vZ917Gku&countryCode=${country}&apikey=MsB8kG8TbXG5nxxfCpIap0DFuyUzwLio`
+      const response = await fetch(url)
+      const data = await response.json()
+
+    }
   
-  </section> -->
-</div>
-</template>
+  function onCountryChange() {
+    console.log("Selected Country Code:", country.value);
+  }
+// Function to handle country selection changes
+</script>
 
-<script lang="ts">
+    <template>
+      <div class="search-view">
+        <header>
+          <h1>Poppy Concert Tracker</h1>
+       <div>
+        <label for="country.select">Select a country:</label>
+        <select id="country.select" v-model="country" @change=onCountryChange>
+          <option value="" disabled>Select a country</option>
+          <option v-for= "(name, code) in countries" :value="code"> {{ name }}
+            </option>
+          </select>
+    
+       </div>
+        </header>
+    
+        
+        <!-- <section v-if="concerts.length > 0" class="concert-list">
+         make a v-for loop on all concerts to create a card containing info abt each concert 
+      </section> 
+    
+       <section v-else  class="no-concert">
+        <div>
+    <h2>You did not find poppy.</h2>
+        </div>
+    
+      
+      </section> -->
+    </div>
+    </template>
+
+
+
+
+<!-- <script lang="ts">
 export default {
   data() {
     return {
@@ -46,17 +148,10 @@ export default {
       concerts: [],
     };
   },
-  methods: {
-    async fetchConcerts() {
-      // Example API call
-      const response = await fetch(
-        `https://api.example.com/concerts?location=${this.location}`
-      );
-      this.concerts = await response.json();
-    },
-  },
-};
-</script>
+ 
+}
+
+</script> -->
 
 <style scoped>
 .home-view {
