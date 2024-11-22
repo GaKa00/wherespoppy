@@ -94,7 +94,7 @@ const countries = {
 };
 
 
-        async function fetchConcerts(country) {
+        async function fetchConcerts(country:string) {
       const url = `https://app.ticketmaster.com/discovery/v2/events.json?attractionId=K8vZ917Gku&countryCode=${country}&apikey=MsB8kG8TbXG5nxxfCpIap0DFuyUzwLio`
       const response = await fetch(url)
       const data = await response.json()
