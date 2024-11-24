@@ -1,10 +1,12 @@
 
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 
 // Declare reactive variables using Composition API
 const country = ref(""); // Reactive variable to hold the selected country ISO code
+const concerts = ref([]);
+const loading = ref(false);
 
 // Reactive countries object
 const countries = {
@@ -93,11 +95,38 @@ const countries = {
   ZA: "South Africa",
 };
 
+watch(country, (newCountry) => {
+ if (newCountry) {
+    fetchConcerts(newCountry);
+  }
+})
+
+
+
 
         async function fetchConcerts(country:string) {
-      const url = `https://app.ticketmaster.com/discovery/v2/events.json?attractionId=K8vZ917Gku&countryCode=${country}&apikey=MsB8kG8TbXG5nxxfCpIap0DFuyUzwLio`
-      const response = await fetch(url)
-      const data = await response.json()
+          const apikey = "MsB8kG8TbXG5nxxfCpIap0DFuyUzwLio"
+      const url = `https://app.ticketmaster.com/discovery/v2/events.json?attractionId=K8vZ917fae0&countryCode=${country}&apikey=${apikey}`
+
+        loading.value = true;
+  
+      try {
+        const response = await fetch(url);
+         if (!response.ok) {
+          throw new Error('Invalid Response');
+        }
+
+        const data = await response.json();
+        console.log(data);
+        return data;
+      } catch (error) {
+        console.error('Error fetching data:', error); 
+      }
+      finally {
+    loading.value = false; 
+  }
+
+     
 
     }
   
@@ -121,6 +150,8 @@ const countries = {
     
        </div>
         </header>
+
+        <div v-if="loading">Loading concerts...</div>
     
         
         <!-- <section v-if="concerts.length > 0" class="concert-list">
