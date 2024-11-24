@@ -118,6 +118,7 @@ watch(country, (newCountry) => {
 
         const data = await response.json();
         console.log(data);
+        concerts.value = data._embedded.events;
         return data;
       } catch (error) {
         console.error('Error fetching data:', error); 
@@ -153,18 +154,24 @@ watch(country, (newCountry) => {
 
         <div v-if="loading">Loading concerts...</div>
     
-        
-        <!-- <section v-if="concerts.length > 0" class="concert-list">
+        <main v-if="country">
+          <section v-if="concerts.length > 0" class="concert-list">
          make a v-for loop on all concerts to create a card containing info abt each concert 
+         <h1> Data found</h1>
       </section> 
     
        <section v-else  class="no-concert">
-        <div>
-    <h2>You did not find poppy.</h2>
-        </div>
-    
-      
-      </section> -->
+         <div>
+           <h2>You did not find poppy.</h2>
+          </div>
+
+       </section>
+
+       
+        
+        
+      </main>
+     
     </div>
     </template>
 
