@@ -3,9 +3,21 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
 
+interface TicketmasterEvent {
+
+  name: string;
+  date: string;
+  venue: string;
+  url: string;
+
+ 
+}
+
+
 // Declare reactive variables using Composition API
-const country = ref(""); // Reactive variable to hold the selected country ISO code
-const concerts = ref([]);
+const country = ref (""); // Reactive variable to hold the selected country ISO code
+
+const concerts = ref<TicketmasterEvent[]>([]);
 const loading = ref(false);
 
 // Reactive countries object
@@ -104,33 +116,38 @@ watch(country, (newCountry) => {
 
 
 
-        async function fetchConcerts(country:string) {
-          const apikey = "MsB8kG8TbXG5nxxfCpIap0DFuyUzwLio"
-      const url = `https://app.ticketmaster.com/discovery/v2/events.json?attractionId=K8vZ917fae0&countryCode=${country}&apikey=${apikey}`
+        async function fetchConcerts(country: string) {
+  const apikey = "MsB8kG8TbXG5nxxfCpIap0DFuyUzwLio";
+  const url = `https://app.ticketmaster.com/discovery/v2/events.json?attractionId=K8vZ917fae0&countryCode=${country}&apikey=${apikey}`;
 
-        loading.value = true;
-  
-      try {
-        const response = await fetch(url);
-         if (!response.ok) {
-          throw new Error('Invalid Response');
-        }
+  loading.value = true;
 
-        const data = await response.json();
-        console.log(data);
-        concerts.value = data._embedded.events;
-        return data;
-      } catch (error) {
-        console.error('Error fetching data:', error); 
-      }
-      finally {
-    loading.value = false; 
-  }
+  try {
+    const response = await fetch(url);
 
-     
-
+    if (!response.ok) {
+      throw new Error("Invalid Response");
     }
-  
+
+    const data = await response.json();
+    console.log(data);
+
+
+    concerts.value = data._embedded?.events.map((event: any) => ({
+      name: event.name || "",
+      date: event.dates?.start?.localDate || "",
+      venue: event._embedded?.venues?.[0]?.name || "",
+      url: event.url || "#",
+    })) || [];
+
+    return concerts.value; 
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  } finally {
+    loading.value = false;
+  }
+}
+
   function onCountryChange() {
     console.log("Selected Country Code:", country.value);
   }
@@ -156,8 +173,18 @@ watch(country, (newCountry) => {
     
         <main v-if="country">
           <section v-if="concerts.length > 0" class="concert-list">
-         make a v-for loop on all concerts to create a card containing info abt each concert 
-         <h1> Data found</h1>
+
+
+        
+   <div v-for="concert in concerts" :key="concert.date" class="concert-card">
+  <h2>{{ concert.name }}</h2>
+  <p v-if="concert.date">Date: {{ concert.date }}</p>
+  <p v-if="concert.venue">Venue: {{ concert.venue }}</p>
+  <a :href="concert.url" target="_blank" class="buy-tickets">Buy Tickets</a>
+</div>
+
+  
+  
       </section> 
     
        <section v-else  class="no-concert">
@@ -177,19 +204,6 @@ watch(country, (newCountry) => {
 
 
 
-
-<!-- <script lang="ts">
-export default {
-  data() {
-    return {
-      location: '',
-      concerts: [],
-    };
-  },
- 
-}
-
-</script> -->
 
 <style scoped>
 .home-view {
