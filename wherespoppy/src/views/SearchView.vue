@@ -3,12 +3,11 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
 
-// Declare reactive variables using Composition API
-const country = ref(""); // Reactive variable to hold the selected country ISO code
-const concerts = ref([]);
-const loading = ref(false);
+const country = ref("");  // holds selected country
+const concerts = ref([]); // ref to contain concerts fetched from ticketmaster api
+const loading = ref(false); // holds loading state
 
-// Reactive countries object
+
 const countries = {
   AD: "Andorra",
   AE: "United Arab Emirates",
@@ -111,14 +110,14 @@ watch(country, (newCountry) => {
         loading.value = true;
   
       try {
-        const response = await fetch(url);
+        const response = await fetch(url);  
          if (!response.ok) {
           throw new Error('Invalid Response');
         }
 
-        const data = await response.json();
+        const data = await response.json();  //if response is valid, save data to data constant
         console.log(data);
-        concerts.value = data._embedded.events;
+        concerts.value = data._embedded.events;  // unpack data and place in in concerts ref 
         return data;
       } catch (error) {
         console.error('Error fetching data:', error); 
