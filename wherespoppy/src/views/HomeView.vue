@@ -50,5 +50,57 @@
   overflow: hidden;
   border-radius: 8px;
   transition: all 0.3s ease;  
+
 }
+
+.glitch-button:hover {
+
+  color: #000;
+  border: 2px solid #000;
+    animation: glitch-animation 0.75s steps(2, end) infinite;
+}
+
+@keyframes glitch-animation {
+  0% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+     text-shadow: 2px 0 red;
+    transform: skew(0.5deg);
+  }
+  25% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+  50% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+  75% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+  100% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+
+ 
+  20% {
+    text-shadow: -2px 0 blue;
+    transform: skew(-0.5deg);
+  }
+  40% {
+    text-shadow: 2px 0 green;
+    transform: skew(0.5deg);
+  }
+  60% {
+    text-shadow: -2px 0 yellow;
+    transform: skew(-0.5deg);
+  }
+  80% {
+    text-shadow: 2px 0 purple;
+    transform: skew(0.5deg);
+  }
+  100% {
+    text-shadow: -2px 0 cyan;
+    transform: skew(0deg);
+  }
+}
+
 </style>
