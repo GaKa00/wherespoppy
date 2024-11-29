@@ -15,7 +15,6 @@ import { RouterView,  } from 'vue-router';
       <RouterView/>
       
     
-     <!-- at click, send to concerts page, at hover make it glitch -->
     </main>
 
     <!-- Footer -->

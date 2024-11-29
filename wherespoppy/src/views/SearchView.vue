@@ -4,13 +4,13 @@
 import { onMounted, ref, watch } from "vue";
 
 interface TicketmasterEvent {
-
+  
   name: string;
   date: string;
   venue: string;
   url: string;
-
- 
+  
+  
 }
 
 
@@ -19,6 +19,8 @@ const country = ref (""); // Reactive variable to hold the selected country ISO 
 
 const concerts = ref<TicketmasterEvent[]>([]);
 const loading = ref(false);
+
+   const isAnimating = ref(false);
 
 // Reactive countries object
 const countries = {
@@ -113,6 +115,13 @@ watch(country, (newCountry) => {
   }
 })
 
+onMounted(() => {
+  console.log("Mounted");
+  isAnimating.value = true; //
+
+  
+});
+
 
 
 
@@ -151,7 +160,16 @@ watch(country, (newCountry) => {
   function onCountryChange() {
     console.log("Selected Country Code:", country.value);
   }
-// Function to handle country selection changes
+
+
+
+  
+
+
+
+  
+
+
 </script>
 
     <template>
@@ -189,7 +207,7 @@ watch(country, (newCountry) => {
     
        <section v-else  class="no-concert">
          <div>
-           <h2>You did not find poppy.</h2>
+       <h2 :class="{ glitch: isAnimating }">You did not find poppy.</h2>
           </div>
 
        </section>
@@ -269,6 +287,41 @@ header input {
 .buy-tickets:hover {
   background: #fff;
   color: #000;
+}
+
+.glitch {
+  position: relative;
+  color: white;
+  font-size: 2em;
+ text-shadow: #fff;
+  animation: glitch-animation 0.75s steps(2, end) infinite;
+}
+
+@keyframes glitch-animation {
+  0% {
+    text-shadow: 2px 0 red;
+    transform: skew(0.5deg);
+  }
+  20% {
+    text-shadow: -2px 0 blue;
+    transform: skew(-0.5deg);
+  }
+  40% {
+    text-shadow: 2px 0 green;
+    transform: skew(0.5deg);
+  }
+  60% {
+    text-shadow: -2px 0 yellow;
+    transform: skew(-0.5deg);
+  }
+  80% {
+    text-shadow: 2px 0 purple;
+    transform: skew(0.5deg);
+  }
+  100% {
+    text-shadow: -2px 0 cyan;
+    transform: skew(0deg);
+  }
 }
 </style>
 

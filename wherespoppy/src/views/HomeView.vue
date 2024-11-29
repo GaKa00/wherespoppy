@@ -2,12 +2,19 @@
      
    <video autoplay muted loop src="../../public/globe.mp4" class="background-video"></video>
      <Button class="glitch-button" @click="$router.push('/concerts')">Find Poppy </Button>
+     <div class="glitch__layers">
+		<div class="glitch__layer"></div>
+		<div class="glitch__layer"></div>
+		<div class="glitch__layer"></div>
+	</div>
+
      
 
 </template>
 
 <script setup lang="ts"  >
  import { RouterLink, useRouter } from 'vue-router';
+ import "@/styles/glitchImg.css"
   const router = useRouter()
 </script>
 
