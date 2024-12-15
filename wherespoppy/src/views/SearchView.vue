@@ -1,7 +1,7 @@
 
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 
 interface TicketmasterEvent {
   
@@ -109,11 +109,22 @@ const countries = {
   ZA: "South Africa",
 };
 
+const selectedCountry = computed(() => {
+  console.log("New country selected:", country.value);
+  return country.value;
+});
+
+
+
 watch(country, (newCountry) => {
  if (newCountry) {
     fetchConcerts(newCountry);
   }
 })
+
+watch(selectedCountry, (newSelectedCountry) => {
+  console.log("Watcher triggered by computed:", newSelectedCountry);
+});
 
 onMounted(() => {
   console.log("Mounted");
